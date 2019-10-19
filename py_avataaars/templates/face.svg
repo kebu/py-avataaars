@@ -1,0 +1,6 @@
+<g id="Face" transform="translate(76.000000, 82.000000)" fill="#000000">
+    {% include template_path("face/mouth/", mouth_type) %}
+    {% include "face/nose/default.svg" %}
+    {% include template_path("face/eyes/", eye_type) %}
+    {% include template_path("face/eyebrow/", eyebrow_type) %}
+</g>

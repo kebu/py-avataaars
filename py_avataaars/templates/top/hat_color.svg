@@ -1,0 +1,6 @@
+<g id="Color/Hat/{{ hat_color }}"
+   mask="url('#{{ maskID }}')"
+   fill-rule="evenodd"
+   fill="{{ hat_color.value }}">
+    <rect id="🖍Color" x="0" y="0" width="264" height="280"/>
+</g>

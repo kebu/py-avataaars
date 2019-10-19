@@ -1,0 +1,7 @@
+<g id="Color/FacialHair/{{ facial_hair_color }}"
+   mask="url('#{{ maskID }}')"
+   fill="{{ facial_hair_color.value }}">
+    <g transform="translate(-32.000000, 0.000000)" id="Color">
+        <rect x="0" y="0" width="264" height="244"/>
+    </g>
+</g>
