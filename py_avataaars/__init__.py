@@ -2,7 +2,7 @@ import enum
 import uuid
 
 from cairosvg import svg2png
-from jinja2 import Environment, PackageLoader, select_autoescape
+from jinja2 import Environment, PackageLoader
 
 
 class AvatarEnum(enum.Enum):
