@@ -7,6 +7,11 @@ Python port of https://github.com/fangpenlin/avataaars
 * Light weight
 * Easy to use
 
+## Install
+```shell script
+pip install py-avataaars
+```
+
 ## Usage
 
 Basic usage:
