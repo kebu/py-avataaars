@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name='py-avataaars',
-    version='0.1.1',
+    version='0.1.4',
     license='MIT',
     description='Python Avatar generator library',
     long_description=long_description,
@@ -29,4 +29,8 @@ setuptools.setup(
         'Programming Language :: Python :: 3',  # Specify which pyhton versions that you want to support
         'Programming Language :: Python :: 3.6',
     ],
+    include_package_data=True,
+    package_data={
+        setuptools.find_packages()[0]: ['templates/*.svg', 'templates/**/*.svg', 'templates/**/**/*.svg']
+    },
 )

@@ -244,7 +244,6 @@ class PyAvataaar(object):
     def __render_svg(self):
         env = Environment(
             loader=PackageLoader('py_avataaars', 'templates'),
-            autoescape=select_autoescape(['html', 'xml'])
         )
         template = env.get_template('main.svg')
         rendered_template = template.render(
