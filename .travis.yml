@@ -1,5 +1,6 @@
 language: python
 os: linux
+cache: pip
 python:
 - '3.6'
 - '3.7'
@@ -8,8 +9,7 @@ script: "pytest test.py"
 deploy:
   provider: pypi
   user: "__token__"
-  password:
-    secure: "$PYPI_PASSWORD"
+  password: "$PYPI_PASSWORD"
   distributions: "sdist bdist_wheel --verbose"
   skip_existing: true
   skip_upload_docs: true
