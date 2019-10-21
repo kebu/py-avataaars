@@ -8,10 +8,10 @@ script: "pytest test.py"
 deploy:
   provider: pypi
   user: __token__
-  password:
-    secure: $PYPI_TOKEN
-  on:
-    tags: true
   distributions: sdist bdist_wheel
   skip_existing: true
+  skip_upload_docs: true
   skip_cleanup: true
+  on:
+    tags: true
+
