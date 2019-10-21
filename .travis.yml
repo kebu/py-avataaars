@@ -3,7 +3,7 @@ os: linux
 python:
 - '3.6'
 - '3.7'
-install: pip3 install --upgrade pip
+install: "pip install -r requirements.txt"
 script: "pytest test.py"
 deploy:
   provider: pypi

@@ -1,0 +1,2 @@
+cairosvg>=2.3.0
+jinja2>=2.9.3
