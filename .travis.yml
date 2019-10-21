@@ -8,7 +8,7 @@ script: "pytest test.py"
 deploy:
   provider: pypi
   user: __token__
-  distributions: sdist bdist_wheel
+  distributions: "sdist bdist_wheel --verbose"
   skip_existing: true
   skip_upload_docs: true
   skip_cleanup: true
