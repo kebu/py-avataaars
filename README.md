@@ -1,6 +1,11 @@
 # py-avataaars - Python component for Avataaars
 
+[![build-status-image]][travis]
+[![pypi-version]][pypi]
+
 Python port of https://github.com/fangpenlin/avataaars
+
+> The core React component for [Avataaars Generator](https://getavataaars.com/) developed by [Fang-Pen Lin](https://twitter.com/fangpenlin), based on the Sketch library [Avataaars](https://avataaars.com/) designed by [Pablo Stanley](https://twitter.com/pablostanley). 
 
 ## Features
 * SVG based
@@ -44,3 +49,8 @@ avatar = pa.PyAvataaar(
 )
 avatar.render_png_file('<output_file.png>')
 ```
+
+[build-status-image]: https://secure.travis-ci.org/kebu/py-avataaars.svg?branch=master
+[travis]: https://travis-ci.org/kebu/py-avataaars?branch=master
+[pypi-version]: https://img.shields.io/pypi/v/py-avataaars.svg
+[pypi]: https://pypi.org/project/py-avataaars/
