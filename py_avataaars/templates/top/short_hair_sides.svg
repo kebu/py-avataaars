@@ -29,7 +29,7 @@
                     <use xlink:href="#{{ path3 }}"/>
                 </mask>
                 <use id="Sides" fill="#9E7A7A" xlink:href="#{{ path3 }}"/>
-                {% with maskID=mask2 %}
+                {% with maskID=mask1 %}
                     {% include "top/hair_color.svg" %}
                 {% endwith %}
             </g>

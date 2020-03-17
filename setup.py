@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name='py-avataaars',
-    version='0.1.12',
+    version='0.1.13',
     license='MIT',
     description='Python Avatar generator library',
     long_description=long_description,
@@ -21,13 +21,15 @@ setuptools.setup(
     ],
     packages=setuptools.find_packages(),
     classifiers=[
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 4 - Beta',
         # Chose either "3 - Alpha", "4 - Beta" or "5 - Production/Stable" as the current state of your package
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
         'Topic :: Multimedia :: Graphics',
         'Topic :: Multimedia :: Graphics :: Graphics Conversion',
         'Topic :: Software Development :: Libraries',
