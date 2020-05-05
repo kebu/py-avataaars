@@ -232,10 +232,9 @@ class PyAvataaar(object):
         self.clothe_graphic_type = clothe_graphic_type
 
     @staticmethod
-    def __unique_id(prefix=None) -> str:
-        if not prefix:
-            return str(uuid.uuid4())
-        return f"{prefix}{uuid.uuid4()}"
+    def __unique_id(prefix: str = None) -> str:
+        sub_values = [prefix, str(uuid.uuid4())]
+        return "-".join(filter(None, sub_values))
 
     @staticmethod
     def __template_path(path: str, enum_type: AvatarEnum) -> str:
