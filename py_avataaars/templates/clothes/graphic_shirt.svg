@@ -1,6 +1,7 @@
-{% set mask1=unique_id("py-avataaars-mask-") %}
-{% set path1=unique_id("py-avataaars-path-") %}
-<g id="Clothing/Graphic-Shirt"
+{% set mask1=unique_id("mask") %}
+{% set path1=unique_id("path") %}
+{% set prefix=template_name(self) %}
+<g id="{{ prefix }}"
    transform="translate(0.000000, 170.000000)">
     <defs>
         <path id="{{ path1 }}"
@@ -10,7 +11,7 @@
     <mask id="{{ mask1 }}" fill="white">
         <use xlink:href="#{{ path1 }}"/>
     </mask>
-    <use id="Clothes"
+    <use id="clothes"
          fill="#E6E6E6"
          fill-rule="evenodd"
          xlink:href="#{{ path1 }}"
@@ -20,7 +21,7 @@
     {% endwith %}
 
     {% with maskID=mask1 %}
-        {% include template_path("clothes/graphics/", clothe_graphic_type) ignore missing %}
+        {% include template_path("clothes/graphics", clothe_graphic_type) ignore missing %}
     {% endwith %}
 
 </g>

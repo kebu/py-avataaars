@@ -1,6 +1,7 @@
-{% set mask1=unique_id("py-avataaars-mask-") %}
-{% set path1=unique_id("py-avataaars-path-") %}
-<g id="Facial-Hair/Beard-Majestic"
+{% set mask1=unique_id("mask") %}
+{% set path1=unique_id("path") %}
+{% set prefix=template_name(self) %}
+<g id="{{ prefix }}"
    transform="translate(49.000000, 72.000000)">
     <defs>
         <path id="{{ path1 }}"
@@ -10,7 +11,7 @@
     <mask id="{{ mask1 }}" fill="white">
         <use xlink:href="#{{ path1 }}"/>
     </mask>
-    <use id="Glorious-Beard"
+    <use id="{{ prefix }}-beard"
          fill="#5E7AA9"
          fill-rule="evenodd"
          xlink:href="#{{ path1 }}"

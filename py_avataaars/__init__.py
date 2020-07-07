@@ -1,7 +1,7 @@
 import enum
 import uuid
 
-from cairosvg import svg2png
+from cairosvg import svg2png, svg2pdf
 from jinja2 import Environment, PackageLoader
 
 
@@ -155,6 +155,10 @@ class MouthType(AvatarEnum):
     VOMIT = 120
 
 
+class NoseType(AvatarEnum):
+    DEFAULT = 10
+
+
 class EyesType(AvatarEnum):
     DEFAULT = 10
     CLOSE = 20
@@ -209,6 +213,7 @@ class PyAvataaar(object):
             hat_color: ClotheColor = ClotheColor.BLACK,
             mouth_type: MouthType = MouthType.SMILE,
             eye_type: EyesType = EyesType.DEFAULT,
+            nose_type: NoseType = NoseType.DEFAULT,
             eyebrow_type: EyebrowType = EyebrowType.DEFAULT,
             accessories_type: AccessoriesType = AccessoriesType.DEFAULT,
             clothe_type: ClotheType = ClotheType.GRAPHIC_SHIRT,
@@ -225,6 +230,7 @@ class PyAvataaar(object):
         self.hat_color = hat_color
         self.mouth_type = mouth_type
         self.eye_type = eye_type
+        self.nose_type = nose_type
         self.eyebrow_type = eyebrow_type
         self.accessories_type = accessories_type
         self.clothe_type = clothe_type
@@ -233,21 +239,34 @@ class PyAvataaar(object):
 
     @staticmethod
     def __unique_id(prefix: str = None) -> str:
-        sub_values = [prefix, str(uuid.uuid4())]
+        sub_values = ['py-avataaars', prefix, str(uuid.uuid4())]
         return "-".join(filter(None, sub_values))
 
     @staticmethod
     def __template_path(path: str, enum_type: AvatarEnum) -> str:
-        return f"{path}{enum_type.name.lower()}.svg"
+        return f"{path}/{enum_type.name.lower()}.svg"
+
+    @staticmethod
+    def __template_name(context):
+        template_name = getattr(context, '_TemplateReference__context', None)
+        if template_name:
+            name = template_name.name
+        else:
+            name = str(uuid.uuid4())
+        name = name.replace('.svg', '')
+        name = name.replace('/', '-')
+        name = name.replace('_', '-')
+        return f'py-avataaars-{name}'
 
     def __render_svg(self):
         env = Environment(
             loader=PackageLoader('py_avataaars', 'templates'),
         )
-        template = env.get_template('main.svg')
+        template = env.get_or_select_template('main.svg')
         rendered_template = template.render(
             unique_id=self.__unique_id,
             template_path=self.__template_path,
+            template_name=self.__template_name,
             style=self.style,
             skin_color=self.skin_color,
             hair_color=self.hair_color,
@@ -255,6 +274,7 @@ class PyAvataaar(object):
             hat_color=self.hat_color,
             mouth_type=self.mouth_type,
             eye_type=self.eye_type,
+            nose_type=self.nose_type,
             eyebrow_type=self.eyebrow_type,
             accessories_type=self.accessories_type,
             facial_hair_type=self.facial_hair_type,
@@ -266,8 +286,14 @@ class PyAvataaar(object):
         return rendered_template
 
     def render_png_file(self, output_file: str):
-        svg2png(bytestring=self.__render_svg().encode(), write_to=output_file)
+        input_string = str(self.__render_svg())
+        svg2png(input_string, write_to=output_file)
+
+    def render_pdf_file(self, output_file: str):
+        input_string = str(self.__render_svg())
+        svg2pdf(input_string, write_to=output_file)
 
     def render_svg_file(self, output_file: str):
         with open(output_file, 'w') as file:
-            file.write(self.__render_svg())
+            input_string = str(self.__render_svg())
+            file.write(input_string)

@@ -1,12 +1,12 @@
-{% set mask1=unique_id("py-avataaars-mask-") %}
-{% set mask2=unique_id("py-avataaars-mask-") %}
-{% set mask3=unique_id("py-avataaars-mask-") %}
-{% set path1=unique_id("py-avataaars-path-") %}
-{% set path2=unique_id("py-avataaars-path-") %}
-{% set path3=unique_id("py-avataaars-path-") %}
-{% set path4=unique_id("py-avataaars-path-") %}
-
-<g id="Top" stroke-width="1" fill-rule="evenodd">
+{% set mask1=unique_id("mask") %}
+{% set mask2=unique_id("mask") %}
+{% set mask3=unique_id("mask") %}
+{% set path1=unique_id("path") %}
+{% set path2=unique_id("path") %}
+{% set path3=unique_id("path") %}
+{% set path4=unique_id("path") %}
+{% set prefix=template_name(self) %}
+<g id="top" stroke-width="1" fill-rule="evenodd">
     <defs>
         <rect id="{{ path2 }}" x="0" y="0" width="264" height="280"/>
         <path id="{{ path3 }}"
@@ -20,10 +20,10 @@
     <mask id="{{ mask2 }}" fill="white">
         <use xlink:href="#{{ path2 }}"/>
     </mask>
-    <g id="Mask"/>
-    <g id="Top/Long-Hair/Shaved-Sides" mask="url('#{{ mask2 }}')">
+    <g id="{{ prefix }}-mask"/>
+    <g id="{{ prefix }}" mask="url('#{{ mask2 }}')">
         <g transform="translate(-1.000000, 0.000000)">
-            <g id="Behind"
+            <g id="behind"
                stroke-width="1"
                fill="none"
                fill-rule="evenodd"
@@ -31,14 +31,14 @@
                 <mask id="{{ mask3 }}" fill="white">
                     <use xlink:href="#{{ path3 }}"/>
                 </mask>
-                <g id="Mask-Hair"/>
-                <path id="Hair"
+                <g id="mask-hair"/>
+                <path id="hair"
                       d="M116.179148,40 L146,40 C171.405098,40 192,60.5949015 192,86 L192,154.108712 C192,180.650314 210.758775,204.349179 222.609956,226.05167 C234.461138,247.754161 215.254522,268.242596 195.770735,276.769484 C190.902336,278.900091 185.645645,280 180.331438,280 L135.26309,280 C78.9108161,280 70.2166412,216.309596 67.6972794,146.504423 L70.2166412,84.1431398 C71.212998,59.4805095 91.4964003,40 116.179148,40 Z"
                       fill="#CCB55A"
                       mask="url('#{{ mask3 }}')"
                 />
             </g>
-            <g id="Top"
+            <g id="{{ prefix }}-top"
                stroke-width="1"
                fill="none"
                fill-rule="evenodd"
@@ -46,8 +46,8 @@
                 <mask id="{{ mask1 }}" fill="white">
                     <use xlink:href="#{{ path4 }}"/>
                 </mask>
-                <g id="Mask"/>
-                <path id="Shadow"
+                <g id="{{ prefix }}-top-mask"/>
+                <path id="shadow"
                       d="M98.8014742,19.9396383 C107.026909,29.4843994 112,41.9114359 112,55.5 L112,65.5 L112,61.5 C112,45.7605792 105.327989,31.5794902 94.657974,21.6307409 C63.9198041,32.6768506 38.0141969,32.8027026 16.9411526,22.0082968 C6.50516181,31.936614 -1.90326939e-15,45.958626 0,61.5 L0,61.5 L0,65.5 L0,55.5 C-1.66642407e-15,41.8926148 4.98687681,29.4499771 13.2327229,19.8999944 C9.3991564,16.860899 8.25944611,8.18718262 19.4671989,4.87682391 C31.3115751,1.37843003 29.3063159,-13.2020165 47.4575903,-15.9260752 C65.6088648,-18.6501339 63.9714902,-11.3745857 81.028596,-12.3495122 C98.0857017,-13.3244386 103.635746,-29.1131795 106.849606,-25.0739991 C119.588767,-9.06341321 116.420993,9.34036319 98.8014742,19.9396383 Z"
                       fill-opacity="0.16"
                       fill="#000000"
@@ -59,8 +59,8 @@
                   fill="#E0C863"
                   fill-rule="evenodd"
             />
-            {% include template_path("top/facial_hair/", facial_hair_type) ignore missing %}
-            {% include template_path("top/accessories/", accessories_type) ignore missing %}
+            {% include template_path("top/facial_hair", facial_hair_type) ignore missing %}
+            {% include template_path("top/accessories", accessories_type) ignore missing %}
         </g>
     </g>
 </g>

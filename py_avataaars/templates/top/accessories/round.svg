@@ -1,6 +1,7 @@
-{% set filter1=unique_id("py-avataaars-filter-") %}
-{% set path1=unique_id("py-avataaars-path-") %}
-<g id="Top/_Resources/Round"
+{% set filter1=unique_id("filter") %}
+{% set path1=unique_id("path") %}
+{% set prefix=template_name(self) %}
+<g id="{{ prefix }}"
    fill="none"
    transform="translate(62.000000, 85.000000)">
     <defs>
@@ -14,20 +15,18 @@
                 height="108.3%"
                 filterUnits="objectBoundingBox"
         >
-            <feOffset
-                    dx="0"
-                    dy="2"
-                    in="SourceAlpha"
-                    result="shadowOffsetOuter1"
+            <feOffset in="SourceAlpha"
+                      dx="0"
+                      dy="2"
+                      result="shadowOffsetOuter1"
             />
-            <feColorMatrix
-                    values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.1 0"
-                    type="matrix"
-                    in="shadowOffsetOuter1"
+            <feColorMatrix in="shadowOffsetOuter1"
+                           values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.1 0"
+                           type="matrix"
             />
         </filter>
     </defs>
-    <g id="Lennon-Glasses">
+    <g id="{{ prefix }}-lennon-glasses">
         <use fill="black"
              fill-opacity="1"
              filter="url('#{{ filter1 }}')"

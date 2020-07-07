@@ -1,14 +1,15 @@
-<g id="Eyes/Eye-Roll-🙄" transform="translate(0.000000, 8.000000)">
-    <circle id="Eyeball" fill="#FFFFFF" cx="30" cy="22" r="14"/>
-    <circle id="The-white-stuff" fill="#FFFFFF" cx="82" cy="22" r="14"/>
-    <circle id="Eye"
+{% set prefix=template_name(self) %}
+<g id="{{ prefix }}" transform="translate(0.000000, 8.000000)">
+    <circle id="eyeball" fill="#FFFFFF" cx="30" cy="22" r="14"/>
+    <circle id="the-white-stuff" fill="#FFFFFF" cx="82" cy="22" r="14"/>
+    <circle id="{{ prefix }}-eye-left"
             fill-opacity="0.699999988"
             fill="#000000"
             cx="30"
             cy="14"
             r="6"
     />
-    <circle id="Eye"
+    <circle id="{{ prefix }}-eye-right"
             fill-opacity="0.699999988"
             fill="#000000"
             cx="82"

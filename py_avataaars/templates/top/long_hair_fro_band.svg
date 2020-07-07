@@ -1,9 +1,9 @@
-{% set mask1=unique_id("py-avataaars-mask-") %}
-{% set mask2=unique_id("py-avataaars-mask-") %}
-{% set path1=unique_id("py-avataaars-path-") %}
-{% set path2=unique_id("py-avataaars-path-") %}
-
-<g id="Top" stroke-width="1" fill-rule="evenodd">
+{% set mask1=unique_id("mask") %}
+{% set mask2=unique_id("mask") %}
+{% set path1=unique_id("path") %}
+{% set path2=unique_id("path") %}
+{% set prefix=template_name(self) %}
+<g id="top" stroke-width="1" fill-rule="evenodd">
     <defs>
         <rect id="{{ path1 }}" x="0" y="0" width="264" height="280"/>
         <path id="{{ path2 }}"
@@ -13,13 +13,13 @@
     <mask id="{{ mask1 }}" fill="white">
         <use xlink:href="#{{ path1 }}"/>
     </mask>
-    <g id="Mask"/>
-    <g id="Top/Long-Hair/Fro-+-Band" mask="url('#{{ mask1 }}')">
+    <g id="{{ prefix }}-mask"/>
+    <g id="{{ prefix }}" mask="url('#{{ mask1 }}')">
         <g transform="translate(-1.000000, 0.000000)">
             <mask id="{{ mask2 }}" fill="white">
                 <use xlink:href="#{{ path2 }}"/>
             </mask>
-            <use id="Hair"
+            <use id="hair"
                  stroke="none"
                  fill="#314756"
                  fill-rule="evenodd"
@@ -28,14 +28,14 @@
             {% with maskID=mask2 %}
                 {% include "top/hair_color.svg" %}
             {% endwith %}
-            <path id="Band"
+            <path id="band"
                   d="M76.6313898,98.975 C76.2155465,96.423245 76,93.8109442 76,91.1521739 C76,62.3493236 101.295912,39 132.5,39 C163.704088,39 189,62.3493236 189,91.1521739 C189,93.8109442 188.784453,96.423245 188.36861,98.975 C184.279562,73.883217 160.823662,54.6456522 132.5,54.6456522 C104.176338,54.6456522 80.7204382,73.883217 76.6313898,98.975 Z"
                   stroke="none"
                   fill="#92D9FF"
                   fill-rule="evenodd"
             />
-            {% include template_path("top/facial_hair/", facial_hair_type) ignore missing %}
-            {% include template_path("top/accessories/", accessories_type) ignore missing %}
+            {% include template_path("top/facial_hair", facial_hair_type) ignore missing %}
+            {% include template_path("top/accessories", accessories_type) ignore missing %}
         </g>
     </g>
 </g>
