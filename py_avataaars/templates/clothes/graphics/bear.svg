@@ -1,3 +1,5 @@
+{% set mask1=unique_id("mask") %}
+{% set path1=unique_id("path") %}
 {% set prefix=template_name(self) %}
 <g id="{{ prefix }}"
    mask="url('#{{ maskID }}'"
