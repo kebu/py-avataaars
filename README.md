@@ -42,6 +42,7 @@ avatar = pa.PyAvataaar(
     mouth_type=pa.MouthType.SMILE,
     eye_type=pa.EyesType.DEFAULT,
     eyebrow_type=pa.EyebrowType.DEFAULT,
+    nose_type=pa.NoseType.DEFAULT,
     accessories_type=pa.AccessoriesType.DEFAULT,
     clothe_type=pa.ClotheType.GRAPHIC_SHIRT,
     clothe_color=pa.ClotheColor.HEATHER,
