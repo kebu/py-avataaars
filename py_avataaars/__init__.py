@@ -1,5 +1,5 @@
 import enum
-import os
+import pathlib
 import uuid
 
 from cairosvg import svg2png
@@ -245,7 +245,7 @@ class PyAvataaar(object):
 
     @staticmethod
     def __template_path(path: str, enum_type: AvatarEnum) -> str:
-        return os.path.join(path, f"{enum_type.name.lower()}.svg")
+        return str(pathlib.Path(path).joinpath(f"{enum_type.name.lower()}.svg"))
 
     @staticmethod
     def __template_name(context):
@@ -254,9 +254,7 @@ class PyAvataaar(object):
             name = template_name.name
         else:
             name = str(uuid.uuid4())
-        name = name.replace('.svg', '')
-        name = name.replace('/', '-')
-        name = name.replace('_', '-')
+        name = name.replace('.svg', '').replace('/', '-').replace('\\', '-').replace('_', '-')
         return f'py-avataaars-{name}'
 
     def __render_svg(self):
