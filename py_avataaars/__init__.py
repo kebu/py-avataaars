@@ -1,7 +1,8 @@
 import enum
+import os
 import uuid
 
-from cairosvg import svg2png, svg2pdf
+from cairosvg import svg2png
 from jinja2 import Environment, PackageLoader
 
 
@@ -244,11 +245,11 @@ class PyAvataaar(object):
 
     @staticmethod
     def __template_path(path: str, enum_type: AvatarEnum) -> str:
-        return f"{path}/{enum_type.name.lower()}.svg"
+        return os.path.join(path, f"{enum_type.name.lower()}.svg")
 
     @staticmethod
     def __template_name(context):
-        template_name = getattr(context, '_TemplateReference__context', None)
+        template_name = getattr(context, '_TemplateReference__context', None) if context else None
         if template_name:
             name = template_name.name
         else:
@@ -262,7 +263,7 @@ class PyAvataaar(object):
         env = Environment(
             loader=PackageLoader('py_avataaars', 'templates'),
         )
-        template = env.get_or_select_template('main.svg')
+        template = env.get_template('main.svg')
         rendered_template = template.render(
             unique_id=self.__unique_id,
             template_path=self.__template_path,
@@ -286,14 +287,8 @@ class PyAvataaar(object):
         return rendered_template
 
     def render_png_file(self, output_file: str):
-        input_string = str(self.__render_svg())
-        svg2png(input_string, write_to=output_file)
-
-    def render_pdf_file(self, output_file: str):
-        input_string = str(self.__render_svg())
-        svg2pdf(input_string, write_to=output_file)
+        svg2png(self.__render_svg(), write_to=output_file)
 
     def render_svg_file(self, output_file: str):
         with open(output_file, 'w') as file:
-            input_string = str(self.__render_svg())
-            file.write(input_string)
+            file.write(self.__render_svg())

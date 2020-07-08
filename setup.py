@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name='py-avataaars',
-    version='0.1.14',
+    version='1.0.0',
     license='MIT',
     description='Python Avatar generator library',
     long_description=long_description,
@@ -13,7 +13,7 @@ setuptools.setup(
     author='Krzysztof Ebert',
     author_email='krzysztof.ebert@gmail.com',
     url='https://github.com/kebu/py-avataaars',
-    keywords=['Python', 'Avatar', 'Avataaars', 'SVG', 'PNG', 'Generator'],
+    keywords=['Python', 'Avatar', 'Avataaars', 'SVG', 'PNG', 'Generator', 'Library', 'Graphic', 'Face', 'Vector'],
     python_requires=">=3.6",
     install_requires=[
         "cairosvg >= 2.3.0",
@@ -22,9 +22,9 @@ setuptools.setup(
     packages=setuptools.find_packages(),
     classifiers=[
         'Development Status :: 5 - Production/Stable',
-        # Chose either "3 - Alpha", "4 - Beta" or "5 - Production/Stable" as the current state of your package
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
+        'Programming Language :: Python :: Implementation',
         'Programming Language :: Python',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.6',
@@ -32,7 +32,10 @@ setuptools.setup(
         'Programming Language :: Python :: 3.8',
         'Topic :: Multimedia :: Graphics',
         'Topic :: Multimedia :: Graphics :: Graphics Conversion',
+        'Topic :: Multimedia :: Graphics :: Presentation',
         'Topic :: Software Development :: Libraries',
+        'Topic :: Software Development :: Libraries :: Python Modules',
+        'Topic :: Utilities',
     ],
     include_package_data=True,
     package_data={
