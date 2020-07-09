@@ -245,7 +245,7 @@ class PyAvataaar(object):
 
     @staticmethod
     def __template_path(path: str, enum_type: AvatarEnum) -> str:
-        return str(pathlib.Path(path).joinpath(f"{enum_type.name.lower()}.svg"))
+        return str(pathlib.PurePosixPath(path).joinpath(f"{enum_type.name.lower()}.svg"))
 
     @staticmethod
     def __template_name(context):
