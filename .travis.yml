@@ -31,7 +31,7 @@ before_install:
   - pip install -U pytest
 install:
   - pip install -r requirements.txt
-script: pytest
+script: "pytest test.py"
 
 deploy:
   provider: pypi
