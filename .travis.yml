@@ -7,14 +7,14 @@ python:
 matrix:
   include:
     - name: "Python 3.6.8 on Windows"
-        os: windows           # Windows 10.0.17134 N/A Build 17134
-        language: shell       # 'language: python' is an error on Travis CI Windows
-        before_install:
-          - choco install python --version 3.6.8
-          - python --version
-          - python -m pip install --upgrade pip
-          - pip3 install --upgrade pytest
-        env: PATH=/c/Python36:/c/Python36/Scripts:$PATH
+      os: windows           # Windows 10.0.17134 N/A Build 17134
+      language: shell       # 'language: python' is an error on Travis CI Windows
+      before_install:
+        - choco install python --version 3.6.8
+        - python --version
+        - python -m pip install --upgrade pip
+        - pip3 install --upgrade pytest
+      env: PATH=/c/Python36:/c/Python36/Scripts:$PATH
     - name: "Python 3.7.4 on Windows"
       os: windows           # Windows 10.0.17134 N/A Build 17134
       language: shell       # 'language: python' is an error on Travis CI Windows
