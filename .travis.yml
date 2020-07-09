@@ -1,8 +1,4 @@
 language: python
-python:
-  - 3.6
-  - 3.7
-  - 3.8
 
 matrix:
   include:
@@ -29,9 +25,17 @@ matrix:
         - pip3 install --upgrade pytest
         - wget "http://repo.msys2.org/distrib/x86_64/msys2-base-x86_64-20180531.tar.xz"
         - 7z e msys2-base-x86_64-20180531.tar.xz
-        - 7z x -y msys2-base-x86_64-20180531.tar
-        - powershell "C:\msys64\usr\bin\bash -lc 'pacman -S mingw-w64-x86_64-gtk3 --noconfirm'"
+        - 7z x -y msys2-base-x86_64-20180531.tar -oc:\\;
+        - powershell -command "C:\msys64\usr\bin\bash -lc 'pacman -S mingw-w64-x86_64-gtk3 --noconfirm'"
       env: PATH=/c/Python37:/c/Python37/Scripts:$PATH
+    - os: linux
+      python: 3.6
+    - os: linux
+      python: 3.7
+    - os: linux
+      python: 3.8
+    - os: linux
+      python: pypy3
 
 before_install:
   - python --version
