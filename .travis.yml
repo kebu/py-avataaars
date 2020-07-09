@@ -1,12 +1,42 @@
 language: python
-os: linux
 cache: pip
-python:
-- '3.6'
-- '3.7'
-- '3.8'
-install: "pip install -r requirements.txt"
-script: "pytest test.py"
+
+jobs:
+  include:
+    - name: "Python 3.6.8 on Windows"
+        os: windows           # Windows 10.0.17134 N/A Build 17134
+        language: shell       # 'language: python' is an error on Travis CI Windows
+        before_install:
+          - choco install python --version 3.6.8
+          - python --version
+          - python -m pip install --upgrade pip
+          - pip3 install --upgrade pytest
+        env: PATH=/c/Python36:/c/Python36/Scripts:$PATH
+    - name: "Python 3.7.4 on Windows"
+      os: windows           # Windows 10.0.17134 N/A Build 17134
+      language: shell       # 'language: python' is an error on Travis CI Windows
+      before_install:
+        - choco install python --version 3.7.4
+        - python --version
+        - python -m pip install --upgrade pip
+        - pip3 install --upgrade pytest
+      env: PATH=/c/Python37:/c/Python37/Scripts:$PATH
+    - os: linux
+      python: 3.6
+    - os: linux
+      python: 3.7
+    - os: linux
+      python: 3.8
+
+
+before_install:
+  - python --version
+  - pip install -U pip
+  - pip install -U pytest
+install:
+  - pip install -r requirements.txt
+script: pytest
+
 deploy:
   provider: pypi
   user: "__token__"
