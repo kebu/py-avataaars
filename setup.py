@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name='py-avataaars',
-    version='1.0.1',
+    version='1.0.2',
     license='MIT',
     description='Python Avatar generator library',
     long_description=long_description,
