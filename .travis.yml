@@ -10,7 +10,6 @@ matrix:
         - python --version
         - python -m pip install --upgrade pip
         - pip3 install --upgrade pytest
-        - [[ ! -f C:/tools/msys64/msys2_shell.cmd ]] && rm -rf C:/tools/msys64
         - choco uninstall -y mingw
         - choco upgrade --no-progress -y msys2
         - export msys2='cmd //C RefreshEnv.cmd '
@@ -32,7 +31,6 @@ matrix:
         - python --version
         - python -m pip install --upgrade pip
         - pip3 install --upgrade pytest
-        - [[ ! -f C:/tools/msys64/msys2_shell.cmd ]] && rm -rf C:/tools/msys64
         - choco uninstall -y mingw
         - choco upgrade --no-progress -y msys2
         - export msys2='cmd //C RefreshEnv.cmd '
