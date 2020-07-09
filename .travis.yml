@@ -14,6 +14,10 @@ matrix:
         - python --version
         - python -m pip install --upgrade pip
         - pip3 install --upgrade pytest
+        - wget "http://repo.msys2.org/distrib/x86_64/msys2-base-x86_64-20180531.tar.xz
+        - 7z e msys2-base-x86_64-20180531.tar.xz
+        - 7z x -y msys2-base-x86_64-20180531.tar
+        - powershell "C:\msys64\usr\bin\bash -lc 'pacman -S mingw-w64-x86_64-gtk3 --noconfirm'"
       env: PATH=/c/Python36:/c/Python36/Scripts:$PATH
     - name: "Python 3.7.4 on Windows"
       os: windows           # Windows 10.0.17134 N/A Build 17134
@@ -23,6 +27,10 @@ matrix:
         - python --version
         - python -m pip install --upgrade pip
         - pip3 install --upgrade pytest
+        - wget "http://repo.msys2.org/distrib/x86_64/msys2-base-x86_64-20180531.tar.xz
+        - 7z e msys2-base-x86_64-20180531.tar.xz
+        - 7z x -y msys2-base-x86_64-20180531.tar
+        - powershell "C:\msys64\usr\bin\bash -lc 'pacman -S mingw-w64-x86_64-gtk3 --noconfirm'"
       env: PATH=/c/Python37:/c/Python37/Scripts:$PATH
 
 before_install:
