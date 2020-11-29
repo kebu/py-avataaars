@@ -1,5 +1,5 @@
 {% set prefix=template_name(self) %}
-<g id="{{ prefix }}" transform="translate(76.000000, 82.000000)" fill="#000000">
+<g id="{{ prefix }}" transform="translate(76,82)" fill="#000000">
     {% include template_path("face/mouth", mouth_type) %}
     {% include template_path("face/nose", nose_type) %}
     {% include template_path("face/eyes", eye_type) %}

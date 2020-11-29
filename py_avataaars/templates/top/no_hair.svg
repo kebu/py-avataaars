@@ -2,7 +2,7 @@
 {% set path1=unique_id("path") %}
 {% set mask1=unique_id("mask") %}
 {% set prefix=template_name(self) %}
-<g id="top" stroke-width="1" fill-rule="evenodd">
+<g id="{{ prefix }}-top" stroke-width="1" fill-rule="evenodd">
     <defs>
         <rect id="{{ path1 }}" x="0" y="0" width="264" height="280"/>
         <filter id="{{ filter1 }}"
@@ -29,12 +29,12 @@
             </feMerge>
         </filter>
     </defs>
-    <mask id="{{ mask1 }}" fill="white">
+    <mask id="{{ mask1 }}" fill="#FFFFFF">
         <use xlink:href="#{{ path1 }}"/>
     </mask>
     <g id="{{ prefix }}-mask"/>
     <g id="{{ prefix }}" mask="url('#{{ mask1 }}')">
-        <g transform="translate(-1.000000, 0.000000)">
+        <g transform="translate(-1,0)">
             {% include template_path("top/facial_hair", facial_hair_type) ignore missing %}
             {% include template_path("top/accessories", accessories_type) ignore missing %}
         </g>

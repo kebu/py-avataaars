@@ -5,7 +5,7 @@
 {% set mask2=unique_id("mask") %}
 {% set prefix=template_name(self) %}
 
-<g id="top" stroke-width="1" fill-rule="evenodd">
+<g id="{{ prefix }}-top" stroke-width="1" fill-rule="evenodd">
     <defs>
         <rect id="{{ path2 }}" x="0" y="0" width="264" height="280"/>
         <path id="{{ path1 }}"
@@ -35,26 +35,26 @@
             </feMerge>
         </filter>
     </defs>
-    <mask id="{{ mask1 }}" fill="white">
+    <mask id="{{ mask1 }}" fill="#FFFFFF">
         <use xlink:href="#{{ path2 }}"/>
     </mask>
     <g id="{{ prefix }}-mask"/>
     <g id="{{ prefix }}" mask="url('#{{ mask1 }}')">
-        <g transform="translate(-1.000000, 0.000000)">
-            <g id="hat"
+        <g transform="translate(-1,0)">
+            <g id="{{ prefix }}-hat"
                stroke-width="1"
                fill-rule="evenodd"
-               transform="translate(1.000000, 0.000000)">
-                <mask id="{{ mask2 }}" fill="white">
+               transform="translate(1,0)">
+                <mask id="{{ mask2 }}" fill="#FFFFFF">
                     <use xlink:href="#{{ path1 }}"/>
                 </mask>
-                <g id="mask-hair"/>
+                <g id="{{ prefix }}-mask-hair"/>
                 <path
                         d="M123.182388,2 L141.817612,2 L141.817612,2 C160.609055,2 176.866947,15.0804442 180.890118,33.4361631 L190,75 L75,75 L84.1098821,33.4361631 L84.1098821,33.4361631 C88.1330533,15.0804442 104.390945,2 123.182388,2 Z"
                         fill="{{ hat_color.value if hat_color else '#1F333C' }}"
                         mask="url('#{{ mask2 }}')"
                 />
-                <ellipse id="hipster"
+                <ellipse id="{{ prefix }}-hipster"
                          fill="{{ hat_color.value if hat_color else '#1F333C' }}"
                          mask="url('#{{ mask2 }}')"
                          cx="132"
@@ -62,7 +62,7 @@
                          rx="122"
                          ry="57.5"
                 />
-                <ellipse id="very"
+                <ellipse id="{{ prefix }}-very"
                          fill="#15232A"
                          mask="url('#{{ mask2 }}')"
                          cx="132"

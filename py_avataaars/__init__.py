@@ -1,9 +1,13 @@
 import enum
 import pathlib
+import re
 import uuid
+from collections import Counter
 
 from cairosvg import svg2png
 from jinja2 import Environment, PackageLoader
+from jinja2.ext import Extension
+from jinja2.lexer import Token
 
 
 class AvatarEnum(enum.Enum):
@@ -77,17 +81,6 @@ class TopType(AvatarEnum):
     SHORT_HAIR_THE_CAESAR_SIDE_PART = 350
 
 
-class FacialHairColor(AvatarEnum):
-    AUBURN = '#A55728'
-    BLACK = '#2C1B18'
-    BLONDE = '#B58143'
-    BLONDE_GOLDEN = '#D6B370'
-    BROWN = '#724133'
-    BROWN_DARK = '#4A312C'
-    PLATINUM = '#ECDCBF'
-    RED = '#C93305'
-
-
 class FacialHairType(AvatarEnum):
     DEFAULT = 10
     BEARD_MEDIUM = 20
@@ -123,7 +116,7 @@ class ClotheGraphicType(AvatarEnum):
     SKULL = 110
 
 
-class ClotheColor(AvatarEnum):
+class Color(AvatarEnum):
     BLACK = '#262E33'
     BLUE_01 = '#65C9FF'
     BLUE_02 = '#5199E4'
@@ -201,28 +194,56 @@ class AccessoriesType(AvatarEnum):
     WAYFARERS = 70
 
 
+class MinifyExtension(Extension):
+    def __init__(self, environment):
+        super(MinifyExtension, self).__init__(environment)
+
+    def parse(self, parser):
+        pass
+
+    def filter_stream(self, stream):
+        super_stream = super().filter_stream(stream)
+
+        for token in super_stream:
+            if token.type != 'data':
+                yield token
+                continue
+
+            value = re.sub(r'\n', '', token.value)
+            value = re.sub(r'(>)(\s+)(<)', r'\1\3', value)
+            value = re.sub(r'\s+', r' ', value)
+            value = re.sub(r'(")(\s+)(/>)', r'\1\3', value)
+
+            yield Token(token.lineno, token.type, value)
+
+
 class PyAvataaar(object):
+    PREFIX = 'py-avataaars'
 
     def __init__(
             self,
             style: AvatarStyle = AvatarStyle.CIRCLE,
+            background_color: Color = Color.RED,
             skin_color: SkinColor = SkinColor.LIGHT,
             hair_color: HairColor = HairColor.BROWN,
             facial_hair_type: FacialHairType = FacialHairType.DEFAULT,
-            facial_hair_color: FacialHairColor = FacialHairColor.BLACK,
+            facial_hair_color: HairColor = HairColor.BLACK,
             top_type: TopType = TopType.SHORT_HAIR_SHORT_FLAT,
-            hat_color: ClotheColor = ClotheColor.BLACK,
+            hat_color: Color = Color.BLACK,
             mouth_type: MouthType = MouthType.SMILE,
             eye_type: EyesType = EyesType.DEFAULT,
             nose_type: NoseType = NoseType.DEFAULT,
             eyebrow_type: EyebrowType = EyebrowType.DEFAULT,
             accessories_type: AccessoriesType = AccessoriesType.DEFAULT,
-            clothe_type: ClotheType = ClotheType.GRAPHIC_SHIRT,
-            clothe_color: ClotheColor = ClotheColor.HEATHER,
+            clothe_type: ClotheType = ClotheType.SHIRT_V_NECK,
+            clothe_color: Color = Color.HEATHER,
             clothe_graphic_type: ClotheGraphicType = ClotheGraphicType.BAT,
+            minify: bool = True,
+            simplify: bool = True,
     ):
         super().__init__()
         self.style = style
+        self.background_color = background_color
         self.skin_color = skin_color
         self.hair_color = hair_color
         self.facial_hair_type = facial_hair_type
@@ -237,10 +258,12 @@ class PyAvataaar(object):
         self.clothe_type = clothe_type
         self.clothe_color = clothe_color
         self.clothe_graphic_type = clothe_graphic_type
+        self.minify = minify
+        self.simplify = simplify
 
     @staticmethod
     def __unique_id(prefix: str = None) -> str:
-        sub_values = ['py-avataaars', prefix, str(uuid.uuid4())]
+        sub_values = [PyAvataaar.PREFIX, prefix, str(uuid.uuid4())]
         return "-".join(filter(None, sub_values))
 
     @staticmethod
@@ -255,11 +278,16 @@ class PyAvataaar(object):
         else:
             name = str(uuid.uuid4())
         name = name.replace('.svg', '').replace('/', '-').replace('\\', '-').replace('_', '-')
-        return f'py-avataaars-{name}'
+        return f'{PyAvataaar.PREFIX}-{name}'
 
     def __render_svg(self):
         env = Environment(
             loader=PackageLoader('py_avataaars', 'templates'),
+            trim_blocks=True,
+            lstrip_blocks=True,
+            autoescape=True,
+            keep_trailing_newline=False,
+            extensions=[MinifyExtension] if self.minify else []
         )
         template = env.get_template('main.svg')
         rendered_template = template.render(
@@ -267,6 +295,7 @@ class PyAvataaar(object):
             template_path=self.__template_path,
             template_name=self.__template_name,
             style=self.style,
+            background_color=self.background_color,
             skin_color=self.skin_color,
             hair_color=self.hair_color,
             top_type=self.top_type,
@@ -282,6 +311,8 @@ class PyAvataaar(object):
             clothe_type=self.clothe_type,
             clothe_graphic_type=self.clothe_graphic_type,
         )
+        if self.simplify:
+            return self.__simplify_ids(rendered_template)
         return rendered_template
 
     def render_png_file(self, output_file: str):
@@ -290,3 +321,12 @@ class PyAvataaar(object):
     def render_svg_file(self, output_file: str):
         with open(output_file, 'w') as file:
             file.write(self.__render_svg())
+
+    def __simplify_ids(self, rendered_template):
+        id_list = re.findall(r'id="([a-zA-Z0-9-]+)"', rendered_template)
+        id_list_multi = {key: value for key, value in Counter(id_list).items() if value > 1}
+        if id_list_multi:
+            print(f'WARING: file contains multiple same ids: {id_list_multi}')
+        for idx, key in enumerate(sorted(id_list, reverse=True)):
+            rendered_template = rendered_template.replace(key, f'x{idx}')
+        return rendered_template

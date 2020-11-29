@@ -1,7 +1,7 @@
 {% set prefix=template_name(self) %}
 <g id="{{ prefix }}"
-   transform="translate(2.000000, 52.000000)"
-   fill-opacity="0.599999964"
+   transform="translate(2,52)"
+   fill-opacity="0.6"
    fill-rule="nonzero"
    fill="#000000">
     <path id="{{ prefix }}-mouth"

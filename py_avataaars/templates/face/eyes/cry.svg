@@ -1,7 +1,7 @@
 {% set prefix=template_name(self) %}
-<g id="{{ prefix }}" transform="translate(0.000000, 8.000000)">
+<g id="{{ prefix }}" transform="translate(0,8)">
     <circle id="{{ prefix }}-eye-left"
-            fill-opacity="0.599999964"
+            fill-opacity="0.6"
             fill="#000000"
             fill-rule="evenodd"
             cx="30"
@@ -14,7 +14,7 @@
           fill-rule="nonzero"
     />
     <circle id="{{ prefix }}-eye-right"
-            fill-opacity="0.599999964"
+            fill-opacity="0.6"
             fill="#000000"
             fill-rule="evenodd"
             cx="82"

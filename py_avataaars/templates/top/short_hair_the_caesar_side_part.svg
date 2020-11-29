@@ -4,7 +4,7 @@
 {% set mask1=unique_id("mask") %}
 {% set mask2=unique_id("mask") %}
 {% set prefix=template_name(self) %}
-<g id="top" stroke-width="1" fill-rule="evenodd">
+<g id="{{ prefix }}-top" stroke-width="1" fill-rule="evenodd">
     <defs>
         <rect id="{{ path1 }}" x="0" y="0" width="264" height="280"/>
         <path id="{{ path2 }}"
@@ -34,21 +34,21 @@
             </feMerge>
         </filter>
     </defs>
-    <mask id="{{ mask1 }}" fill="white">
+    <mask id="{{ mask1 }}" fill="#FFFFFF">
         <use xlink:href="#{{ path1 }}"/>
     </mask>
     <g id="{{ prefix }}-mask"/>
     <g id="{{ prefix }}" mask="url('#{{ mask1 }}')">
-        <g transform="translate(-1.000000, 0.000000)">
+        <g transform="translate(-1,0)">
             {% include template_path("top/facial_hair", facial_hair_type) ignore missing %}
-            <g id="hair"
+            <g id="{{ prefix }}-hair"
                stroke-width="1"
                fill-rule="evenodd"
-               transform="translate(75.000000, 34.000000)">
-                <mask id="{{ mask2 }}" fill="white">
+               transform="translate(75,34)">
+                <mask id="{{ mask2 }}" fill="#FFFFFF">
                     <use xlink:href="#{{ path2 }}"/>
                 </mask>
-                <use id="caesar" fill="#28354B" xlink:href="#{{ path2 }}"/>
+                <use id="{{ prefix }}-caesar" fill="#28354B" xlink:href="#{{ path2 }}"/>
                 {% with maskID=mask2 %}
                     {% include "top/hair_color.svg" %}
                 {% endwith %}
