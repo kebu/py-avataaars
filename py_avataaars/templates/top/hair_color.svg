@@ -1,7 +1,7 @@
 {% set prefix=template_name(self) %}
 <g id="{{ prefix }}-{{ hair_color|lower }}"
    mask="url('#{{ maskID }}')"
-   fill="{{ hair_color.value }}">
+   fill="{{ hair_color.main_value }}">
     <g transform="translate(0,0) " id="{{ prefix }}">
         <rect x="0" y="0" width="264" height="280"/>
     </g>

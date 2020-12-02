@@ -3,6 +3,7 @@ import pathlib
 import re
 import uuid
 from collections import Counter
+from io import BytesIO
 
 from cairosvg import svg2png
 from jinja2 import Environment, PackageLoader
@@ -11,28 +12,38 @@ from jinja2.lexer import Token
 
 
 class AvatarEnum(enum.Enum):
+
+    def __new__(cls, *args, **kwargs):
+        value = len(cls.__members__)
+        obj = object.__new__(cls)
+        obj._value_ = value
+        return obj
+
+    def __init__(self, main_value):
+        self.main_value = main_value
+
     def __str__(self):
         return self.name.lower().title()
 
 
 class AvatarStyle(AvatarEnum):
-    CIRCLE = 1
-    TRANSPARENT = 2
+    TRANSPARENT = 'TRANSPARENT'
+    CIRCLE = 'CIRCLE'
 
 
 class SkinColor(AvatarEnum):
+    BLACK = '#614335'
     TANNED = '#FD9841'
     YELLOW = '#F8D25C'
     PALE = '#FFDBB4'
     LIGHT = '#EDB98A'
     BROWN = '#D08B5B'
     DARK_BROWN = '#AE5D29'
-    BLACK = '#614335'
 
 
 class HairColor(AvatarEnum):
-    AUBURN = '#A55728'
     BLACK = '#2C1B18'
+    AUBURN = '#A55728'
     BLONDE = '#B58143'
     BLONDE_GOLDEN = '#D6B370'
     BROWN = '#724133'
@@ -44,76 +55,76 @@ class HairColor(AvatarEnum):
 
 
 class TopType(AvatarEnum):
-    NO_HAIR = 10
-    EYE_PATCH = 20
-    HAT = 30
-    HIJAB = 40
-    TURBAN = 50
-    WINTER_HAT1 = 60
-    WINTER_HAT2 = 70
-    WINTER_HAT3 = 80
-    WINTER_HAT4 = 90
-    LONG_HAIR_BIG_HAIR = 100
-    LONG_HAIR_BOB = 110
-    LONG_HAIR_BUN = 120
-    LONG_HAIR_CURLY = 130
-    LONG_HAIR_CURVY = 140
-    LONG_HAIR_DREADS = 150
-    LONG_HAIR_FRIDA = 160
-    LONG_HAIR_FRO = 170
-    LONG_HAIR_FRO_BAND = 180
-    LONG_HAIR_NOT_TOO_LONG = 190
-    LONG_HAIR_SHAVED_SIDES = 200
-    LONG_HAIR_MIA_WALLACE = 210
-    LONG_HAIR_STRAIGHT = 220
-    LONG_HAIR_STRAIGHT2 = 230
-    LONG_HAIR_STRAIGHT_STRAND = 240
-    SHORT_HAIR_DREADS_01 = 250
-    SHORT_HAIR_DREADS_02 = 260
-    SHORT_HAIR_FRIZZLE = 270
-    SHORT_HAIR_SHAGGY_MULLET = 280
-    SHORT_HAIR_SHORT_CURLY = 290
-    SHORT_HAIR_SHORT_FLAT = 300
-    SHORT_HAIR_SHORT_ROUND = 310
-    SHORT_HAIR_SHORT_WAVED = 320
-    SHORT_HAIR_SIDES = 330
-    SHORT_HAIR_THE_CAESAR = 340
-    SHORT_HAIR_THE_CAESAR_SIDE_PART = 350
+    NO_HAIR = 'NO_HAIR'
+    EYE_PATCH = 'EYE_PATCH'
+    HAT = 'HAT'
+    HIJAB = 'HIJAB'
+    TURBAN = 'TURBAN'
+    WINTER_HAT1 = 'WINTER_HAT1'
+    WINTER_HAT2 = 'WINTER_HAT2'
+    WINTER_HAT3 = 'WINTER_HAT3'
+    WINTER_HAT4 = 'WINTER_HAT4'
+    LONG_HAIR_BIG_HAIR = 'LONG_HAIR_BIG_HAIR'
+    LONG_HAIR_BOB = 'LONG_HAIR_BOB'
+    LONG_HAIR_BUN = 'LONG_HAIR_BUN'
+    LONG_HAIR_CURLY = 'LONG_HAIR_CURLY'
+    LONG_HAIR_CURVY = 'LONG_HAIR_CURVY'
+    LONG_HAIR_DREADS = 'LONG_HAIR_DREADS'
+    LONG_HAIR_FRIDA = 'LONG_HAIR_FRIDA'
+    LONG_HAIR_FRO = 'LONG_HAIR_FRO'
+    LONG_HAIR_FRO_BAND = 'LONG_HAIR_FRO_BAND'
+    LONG_HAIR_NOT_TOO_LONG = 'LONG_HAIR_NOT_TOO_LONG'
+    LONG_HAIR_MIA_WALLACE = 'LONG_HAIR_MIA_WALLACE'
+    LONG_HAIR_SHAVED_SIDES = 'LONG_HAIR_SHAVED_SIDES'
+    LONG_HAIR_STRAIGHT = 'LONG_HAIR_STRAIGHT'
+    LONG_HAIR_STRAIGHT2 = 'LONG_HAIR_STRAIGHT2'
+    LONG_HAIR_STRAIGHT_STRAND = 'LONG_HAIR_STRAIGHT_STRAND'
+    SHORT_HAIR_DREADS_01 = 'SHORT_HAIR_DREADS_01'
+    SHORT_HAIR_DREADS_02 = 'SHORT_HAIR_DREADS_02'
+    SHORT_HAIR_FRIZZLE = 'SHORT_HAIR_FRIZZLE'
+    SHORT_HAIR_SHAGGY_MULLET = 'SHORT_HAIR_SHAGGY_MULLET'
+    SHORT_HAIR_SHORT_CURLY = 'SHORT_HAIR_SHORT_CURLY'
+    SHORT_HAIR_SHORT_FLAT = 'SHORT_HAIR_SHORT_FLAT'
+    SHORT_HAIR_SHORT_ROUND = 'SHORT_HAIR_SHORT_ROUND'
+    SHORT_HAIR_SHORT_WAVED = 'SHORT_HAIR_SHORT_WAVED'
+    SHORT_HAIR_SIDES = 'SHORT_HAIR_SIDES'
+    SHORT_HAIR_THE_CAESAR = 'SHORT_HAIR_THE_CAESAR'
+    SHORT_HAIR_THE_CAESAR_SIDE_PART = 'SHORT_HAIR_THE_CAESAR_SIDE_PART'
 
 
 class FacialHairType(AvatarEnum):
-    DEFAULT = 10
-    BEARD_MEDIUM = 20
-    BEARD_LIGHT = 30
-    BEARD_MAJESTIC = 40
-    MOUSTACHE_FANCY = 50
-    MOUSTACHE_MAGNUM = 60
+    DEFAULT = 'DEFAULT'
+    BEARD_MEDIUM = 'BEARD_MEDIUM'
+    BEARD_LIGHT = 'BEARD_LIGHT'
+    BEARD_MAJESTIC = 'BEARD_MAJESTIC'
+    MOUSTACHE_FANCY = 'MOUSTACHE_FANCY'
+    MOUSTACHE_MAGNUM = 'MOUSTACHE_MAGNUM'
 
 
 class ClotheType(AvatarEnum):
-    BLAZER_SHIRT = 10
-    BLAZER_SWEATER = 20
-    COLLAR_SWEATER = 30
-    GRAPHIC_SHIRT = 40
-    HOODIE = 50
-    OVERALL = 60
-    SHIRT_CREW_NECK = 70
-    SHIRT_SCOOP_NECK = 80
-    SHIRT_V_NECK = 90
+    BLAZER_SHIRT = 'BLAZER_SHIRT'
+    BLAZER_SWEATER = 'BLAZER_SWEATER'
+    COLLAR_SWEATER = 'COLLAR_SWEATER'
+    GRAPHIC_SHIRT = 'GRAPHIC_SHIRT'
+    HOODIE = 'HOODIE'
+    OVERALL = 'OVERALL'
+    SHIRT_CREW_NECK = 'SHIRT_CREW_NECK'
+    SHIRT_SCOOP_NECK = 'SHIRT_SCOOP_NECK'
+    SHIRT_V_NECK = 'SHIRT_V_NECK'
 
 
 class ClotheGraphicType(AvatarEnum):
-    BAT = 10
-    CUMBIA = 20
-    DEER = 30
-    DIAMOND = 40
-    HOLA = 50
-    PIZZA = 60
-    RESIST = 70
-    SELENA = 80
-    BEAR = 90
-    SKULL_OUTLINE = 100
-    SKULL = 110
+    BAT = 'BAT'
+    CUMBIA = 'CUMBIA'
+    DEER = 'DEER'
+    DIAMOND = 'DIAMOND'
+    HOLA = 'HOLA'
+    PIZZA = 'PIZZA'
+    RESIST = 'RESIST'
+    SELENA = 'SELENA'
+    BEAR = 'BEAR'
+    SKULL_OUTLINE = 'SKULL_OUTLINE'
+    SKULL = 'SKULL'
 
 
 class Color(AvatarEnum):
@@ -135,63 +146,63 @@ class Color(AvatarEnum):
 
 
 class MouthType(AvatarEnum):
-    DEFAULT = 10
-    CONCERNED = 20
-    DISBELIEF = 30
-    EATING = 40
-    GRIMACE = 50
-    SAD = 60
-    SCREAM_OPEN = 70
-    SERIOUS = 80
-    SMILE = 90
-    TONGUE = 100
-    TWINKLE = 110
-    VOMIT = 120
+    DEFAULT = 'DEFAULT'
+    CONCERNED = 'CONCERNED'
+    DISBELIEF = 'DISBELIEF'
+    EATING = 'EATING'
+    GRIMACE = 'GRIMACE'
+    SAD = 'SAD'
+    SCREAM_OPEN = 'SCREAM_OPEN'
+    SERIOUS = 'SERIOUS'
+    SMILE = 'SMILE'
+    TONGUE = 'TONGUE'
+    TWINKLE = 'TWINKLE'
+    VOMIT = 'VOMIT'
 
 
 class NoseType(AvatarEnum):
-    DEFAULT = 10
+    DEFAULT = 'DEFAULT'
 
 
 class EyesType(AvatarEnum):
-    DEFAULT = 10
-    CLOSE = 20
-    CRY = 30
-    DIZZY = 40
-    EYE_ROLL = 50
-    HAPPY = 60
-    HEARTS = 70
-    SIDE = 80
-    SQUINT = 90
-    SURPRISED = 100
-    WINK = 110
-    WINK_WACKY = 120
+    DEFAULT = 'DEFAULT'
+    CLOSE = 'CLOSE'
+    CRY = 'CRY'
+    DIZZY = 'DIZZY'
+    EYE_ROLL = 'EYE_ROLL'
+    HAPPY = 'HAPPY'
+    HEARTS = 'HEARTS'
+    SIDE = 'SIDE'
+    SQUINT = 'SQUINT'
+    SURPRISED = 'SURPRISED'
+    WINK = 'WINK'
+    WINK_WACKY = 'WINK_WACKY'
 
 
 class EyebrowType(AvatarEnum):
-    DEFAULT = 10
-    DEFAULT_NATURAL = 20
-    ANGRY = 30
-    ANGRY_NATURAL = 40
-    FLAT_NATURAL = 50
-    RAISED_EXCITED = 60
-    RAISED_EXCITED_NATURAL = 70
-    SAD_CONCERNED = 80
-    SAD_CONCERNED_NATURAL = 90
-    UNI_BROW_NATURAL = 100
-    UP_DOWN = 110
-    UP_DOWN_NATURAL = 120
-    FROWN_NATURAL = 130
+    DEFAULT = 'DEFAULT'
+    DEFAULT_NATURAL = 'DEFAULT_NATURAL'
+    ANGRY = 'ANGRY'
+    ANGRY_NATURAL = 'ANGRY_NATURAL'
+    FLAT_NATURAL = 'FLAT_NATURAL'
+    RAISED_EXCITED = 'RAISED_EXCITED'
+    RAISED_EXCITED_NATURAL = 'RAISED_EXCITED_NATURAL'
+    SAD_CONCERNED = 'SAD_CONCERNED'
+    SAD_CONCERNED_NATURAL = 'SAD_CONCERNED_NATURAL'
+    UNI_BROW_NATURAL = 'UNI_BROW_NATURAL'
+    UP_DOWN = 'UP_DOWN'
+    UP_DOWN_NATURAL = 'UP_DOWN_NATURAL'
+    FROWN_NATURAL = 'FROWN_NATURAL'
 
 
 class AccessoriesType(AvatarEnum):
-    DEFAULT = 10
-    KURT = 20
-    PRESCRIPTION_01 = 30
-    PRESCRIPTION_02 = 40
-    ROUND = 50
-    SUNGLASSES = 60
-    WAYFARERS = 70
+    DEFAULT = 'DEFAULT'
+    KURT = 'KURT'
+    PRESCRIPTION_01 = 'PRESCRIPTION_01'
+    PRESCRIPTION_02 = 'PRESCRIPTION_02'
+    ROUND = 'ROUND'
+    SUNGLASSES = 'SUNGLASSES'
+    WAYFARERS = 'WAYFARERS'
 
 
 class MinifyExtension(Extension):
@@ -280,6 +291,15 @@ class PyAvataaar(object):
         name = name.replace('.svg', '').replace('/', '-').replace('\\', '-').replace('_', '-')
         return f'{PyAvataaar.PREFIX}-{name}'
 
+    def __simplify_ids(self, rendered_template):
+        id_list = re.findall(r'id="([a-zA-Z0-9-]+)"', rendered_template)
+        id_list_multi = {key: value for key, value in Counter(id_list).items() if value > 1}
+        if id_list_multi:
+            print(f'WARING: file contains multiple same ids: {id_list_multi}')
+        for idx, key in enumerate(sorted(id_list, reverse=True)):
+            rendered_template = rendered_template.replace(key, f'x{idx}')
+        return rendered_template
+
     def __render_svg(self):
         env = Environment(
             loader=PackageLoader('py_avataaars', 'templates'),
@@ -322,11 +342,25 @@ class PyAvataaar(object):
         with open(output_file, 'w') as file:
             file.write(self.__render_svg())
 
-    def __simplify_ids(self, rendered_template):
-        id_list = re.findall(r'id="([a-zA-Z0-9-]+)"', rendered_template)
-        id_list_multi = {key: value for key, value in Counter(id_list).items() if value > 1}
-        if id_list_multi:
-            print(f'WARING: file contains multiple same ids: {id_list_multi}')
-        for idx, key in enumerate(sorted(id_list, reverse=True)):
-            rendered_template = rendered_template.replace(key, f'x{idx}')
-        return rendered_template
+    def render_svg(self):
+        return self.__render_svg()
+
+    def render_png(self):
+        output_file = BytesIO()
+        svg2png(self.__render_svg(), write_to=output_file)
+        return output_file.getvalue()
+
+    @property
+    def unique_id(self) -> str:
+        return "".join([f'{y.value:02x}' for x, y in sorted(vars(self).items()) if isinstance(y, AvatarEnum)])
+
+    @unique_id.setter
+    def unique_id(self, value: str) -> None:
+        if re.fullmatch(r"^[0-9a-fA-F]$", value or "") is not None:
+            raise ValueError(f'Cannot parse unique id {value}')
+
+        value_parts = [value[i:i + 2] for i in range(0, len(value), 2)]
+        for idx, (key, param_value) in enumerate(
+                {x: y for x, y in sorted(vars(self).items()) if isinstance(y, AvatarEnum)}.items()
+        ):
+            setattr(self, key, param_value.__class__(int(value_parts[idx], 16)))

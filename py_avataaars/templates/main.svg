@@ -38,7 +38,7 @@
                             />
                             <g id="{{ prefix }}-bg-color-{{ background_color|lower }}"
                                mask="url('#{{ path2 }}')"
-                               fill="{{ background_color.value }}">
+                               fill="{{ background_color.main_value }}">
                                 <rect id="{{ prefix }}-bg-color" x="0" y="0" width="240" height="240"/>
                             </g>
                         </g>

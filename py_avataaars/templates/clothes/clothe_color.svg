@@ -2,6 +2,6 @@
 <g id="{{ prefix }}-palette-{{ clothe_color|lower }}"
    mask="url('#{{ maskID }}')"
    fill-rule="evenodd"
-   fill="{{ clothe_color.value }}">
+   fill="{{ clothe_color.main_value }}">
     <rect id="{{ prefix }}-background" x="0" y="0" width="264" height="110"/>
 </g>
