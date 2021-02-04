@@ -11,12 +11,17 @@ class AvatarEnum(enum.Enum):
         return self.name.lower().title()
 
 
+class AvatarColor(enum.Enum):
+    def __str__(self):
+        return self.value
+
+
 class AvatarStyle(AvatarEnum):
     CIRCLE = 1
     TRANSPARENT = 2
 
 
-class SkinColor(AvatarEnum):
+class SkinColor(AvatarColor):
     TANNED = '#FD9841'
     YELLOW = '#F8D25C'
     PALE = '#FFDBB4'
@@ -26,7 +31,7 @@ class SkinColor(AvatarEnum):
     BLACK = '#614335'
 
 
-class HairColor(AvatarEnum):
+class HairColor(AvatarColor):
     AUBURN = '#A55728'
     BLACK = '#2C1B18'
     BLONDE = '#B58143'
@@ -77,7 +82,7 @@ class TopType(AvatarEnum):
     SHORT_HAIR_THE_CAESAR_SIDE_PART = 350
 
 
-class FacialHairColor(AvatarEnum):
+class FacialHairColor(AvatarColor):
     AUBURN = '#A55728'
     BLACK = '#2C1B18'
     BLONDE = '#B58143'
@@ -123,7 +128,7 @@ class ClotheGraphicType(AvatarEnum):
     SKULL = 110
 
 
-class ClotheColor(AvatarEnum):
+class ClotheColor(AvatarColor):
     BLACK = '#262E33'
     BLUE_01 = '#65C9FF'
     BLUE_02 = '#5199E4'
