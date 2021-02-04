@@ -46,7 +46,6 @@ class HairColor(AvatarColor):
 
 class TopType(AvatarEnum):
     NO_HAIR = 10
-    EYE_PATCH = 20
     HAT = 30
     HIJAB = 40
     TURBAN = 50
@@ -204,6 +203,7 @@ class AccessoriesType(AvatarEnum):
     ROUND = 50
     SUNGLASSES = 60
     WAYFARERS = 70
+    EYE_PATCH = 80
 
 
 class PyAvataaar(object):
