@@ -179,6 +179,16 @@ class EyesType(AvatarEnum):
     WINK_WACKY = 120
 
 
+class EyeColor(AvatarColor):
+    AMBER = '#EBB000'
+    BLUE = '#65C9FF'
+    BROWN = '#A52A2A'
+    GRAY = '#BEBEBE'
+    GREEN = '#4B7248'
+    HAZEL = '#AA8344'
+    VIOLET = '#EE82EE'
+
+
 class EyebrowType(AvatarEnum):
     DEFAULT = 10
     DEFAULT_NATURAL = 20
@@ -219,6 +229,7 @@ class PyAvataaar(object):
             hat_color: ClotheColor = ClotheColor.BLACK,
             mouth_type: MouthType = MouthType.SMILE,
             eye_type: EyesType = EyesType.DEFAULT,
+            eye_color: EyeColor = EyeColor.BROWN,
             nose_type: NoseType = NoseType.DEFAULT,
             eyebrow_type: EyebrowType = EyebrowType.DEFAULT,
             accessories_type: AccessoriesType = AccessoriesType.DEFAULT,
@@ -236,6 +247,7 @@ class PyAvataaar(object):
         self.hat_color = hat_color
         self.mouth_type = mouth_type
         self.eye_type = eye_type
+        self.eye_color = eye_color
         self.nose_type = nose_type
         self.eyebrow_type = eyebrow_type
         self.accessories_type = accessories_type
@@ -254,12 +266,14 @@ class PyAvataaar(object):
 
     @staticmethod
     def __template_name(context):
-        template_name = getattr(context, '_TemplateReference__context', None) if context else None
+        template_name = getattr(
+            context, '_TemplateReference__context', None) if context else None
         if template_name:
             name = template_name.name
         else:
             name = str(uuid.uuid4())
-        name = name.replace('.svg', '').replace('/', '-').replace('\\', '-').replace('_', '-')
+        name = name.replace('.svg', '').replace(
+            '/', '-').replace('\\', '-').replace('_', '-')
         return f'py-avataaars-{name}'
 
     def __render_svg(self):
@@ -278,6 +292,7 @@ class PyAvataaar(object):
             hat_color=self.hat_color,
             mouth_type=self.mouth_type,
             eye_type=self.eye_type,
+            eye_color=self.eye_color,
             nose_type=self.nose_type,
             eyebrow_type=self.eyebrow_type,
             accessories_type=self.accessories_type,

@@ -1,7 +1,8 @@
 {% set prefix=template_name(self) %}
-<g id="{{ prefix }}"
-   transform="translate(0.000000, 8.000000)"
-   fill-opacity="0.599999964">
-    <circle id="{{ prefix }}-eye-left" cx="30" cy="22" r="6"/>
-    <circle id="{{ prefix }}-eye-right" cx="82" cy="22" r="6"/>
+<g id="{{ prefix }}-{{eye_color|lower}}"
+   transform="translate(0.000000, 8.000000)">
+    <circle id="{{ prefix }}-eye-left" cx="30" cy="22" r="6" fill="white"/>
+    <circle id="{{ prefix }}-eye-right" cx="82" cy="22" r="6" fill="white"/>
+    <circle id="{{ prefix }}-eye-left-iris" cx="30" cy="22" r="3" fill="{{eye_color}}"/>
+    <circle id="{{ prefix }}-eye-right-iris" cx="82" cy="22" r="3" fill="{{eye_color}}"/>
 </g>
