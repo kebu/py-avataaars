@@ -1,10 +1,10 @@
 language: python
 
-matrix:
+jobs:
   include:
-    - name: "Python 3.6.8 on Windows"
-      os: windows           # Windows 10.0.17134 N/A Build 17134
-      language: shell       # 'language: python' is an error on Travis CI Windows
+    - name: "Python 3.6 on Windows"
+      os: windows
+      language: shell
       before_install:
         - choco install python --version 3.6.8
         - python --version
@@ -19,12 +19,12 @@ matrix:
         - export msys2+=" -msys2 -c "\"\$@"\" --"
         - $msys2 pacman --sync --noconfirm --needed mingw-w64-x86_64-toolchain
         - export PATH=/C/tools/msys64/mingw64/bin:$PATH
-        - export MAKE=mingw32-make  # so that Autotools can find it
+        - export MAKE=mingw32-make
         - $msys2 pacman -S mingw-w64-x86_64-gtk3 --noconfirm
       env: PATH=/c/Python36:/c/Python36/Scripts:$PATH
-    - name: "Python 3.7.4 on Windows"
-      os: windows           # Windows 10.0.17134 N/A Build 17134
-      language: shell       # 'language: python' is an error on Travis CI Windows
+    - name: "Python 3.7 on Windows"
+      os: windows
+      language: shell
       before_install:
         - choco install python --version 3.7.4
         - python --version
@@ -39,7 +39,7 @@ matrix:
         - export msys2+=" -msys2 -c "\"\$@"\" --"
         - $msys2 pacman --sync --noconfirm --needed mingw-w64-x86_64-toolchain
         - export PATH=/C/tools/msys64/mingw64/bin:$PATH
-        - export MAKE=mingw32-make  # so that Autotools can find it
+        - export MAKE=mingw32-make
         - $msys2 pacman -S mingw-w64-x86_64-gtk3 --noconfirm
       env: PATH=/c/Python37:/c/Python37/Scripts:$PATH
     - os: linux
