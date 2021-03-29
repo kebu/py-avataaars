@@ -295,7 +295,7 @@ class PyAvataaar(object):
         id_list = re.findall(r'id="([a-zA-Z0-9-]+)"', rendered_template)
         id_list_multi = {key: value for key, value in Counter(id_list).items() if value > 1}
         if id_list_multi:
-            print(f'WARING: file contains multiple same ids: {id_list_multi}')
+            print(f'WARNING: file contains multiple same ids: {id_list_multi}')
         for idx, key in enumerate(sorted(id_list, reverse=True)):
             rendered_template = rendered_template.replace(key, f'x{idx}')
         return rendered_template
